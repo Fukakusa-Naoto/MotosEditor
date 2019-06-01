@@ -29,23 +29,29 @@ namespace MapEditor
 		// 選択ID
 		enum SelectID
 		{
-			Floor, PlayerParts, Enemy
+			FLOOR,
+			PLAYER_PARTS,
+			ENEMY,
 		}
 
 		// オブジェクトID
 		enum ObjectID : int
 		{
-			None, Player, Power, Jump, Enemy
+			NONE,
+			PLAYER,
+			POWER,
+			JUMP,
+			ENEMY
 		}
 
-		// プロパティ
-		int chipSize = 32;  // チップのサイズ
-		int stageW = 10;    // ステージの横のチップ数
-		int stageH = 10;    // ステージの縦のチップ数
-		int[] stageTable;   // ステージデータの配列
-		ObjectID[] objectTable; // 配置オブジェクトデータの配列
-		int selectChip = 0; // 選択されているチップ番号
-		SelectID selectID = SelectID.Floor; // 選択されているチップの種類
+		// <メンバ変数>
+		int m_chipSize = 32;  // チップのサイズ
+		int m_stageWidth = 10;    // ステージの横のチップ数
+		int m_stageHeight = 10;    // ステージの縦のチップ数
+		int[] m_stageTable;   // ステージデータの配列
+		ObjectID[] m_objectTable; // 配置オブジェクトデータの配列
+		int m_selectChip = 0; // 選択されているチップ番号
+		SelectID m_selectID = SelectID.FLOOR; // 選択されているチップの種類
 
 
 		public MainWindow()
@@ -56,7 +62,7 @@ namespace MapEditor
 
 		private System.Drawing.Point PositionToChipPosition(int x, int y)
 		{
-			return new System.Drawing.Point(x / chipSize * chipSize, y / chipSize * chipSize);
+			return new System.Drawing.Point(x / m_chipSize * m_chipSize, y / m_chipSize * m_chipSize);
 		}
 
 
@@ -76,9 +82,9 @@ namespace MapEditor
 				selectImage.Source = cb;
 
 				// 床のチップを選択した
-				selectID = SelectID.Floor;
+				m_selectID = SelectID.FLOOR;
 				// 選択しているチップ番号を記憶
-				selectChip = chipPos.X / chipSize;
+				m_selectChip = chipPos.X / m_chipSize;
 			}
 		}
 
@@ -91,8 +97,8 @@ namespace MapEditor
 			selectImage.Source = new BitmapImage();
 
 			// 配列を作成
-			stageTable = new int[stageW * stageH];
-			objectTable = new ObjectID[stageW * stageH];
+			m_stageTable = new int[m_stageWidth * m_stageHeight];
+			m_objectTable = new ObjectID[m_stageWidth * m_stageHeight];
 
 			// ステージの更新
 			UpdateStage();
@@ -135,7 +141,7 @@ namespace MapEditor
 			processedBitmap.Lock();
 
 			// 床を描画する
-			for (int i = 0; i < stageW * stageH; ++i)
+			for (int i = 0; i < m_stageWidth * m_stageHeight; ++i)
 			{
 				unsafe
 				{
@@ -144,11 +150,11 @@ namespace MapEditor
 					BitmapSource bs = (BitmapSource)floorImage.Source;
 					Bitmap bitmap = ToBitmap(bs, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
 
-					for (int y = i / stageW * chipSize; y < (i / stageW * chipSize) + 32; ++y)
+					for (int y = i / m_stageWidth * m_chipSize; y < (i / m_stageWidth * m_chipSize) + 32; ++y)
 					{
-						for (int x = i % stageW * chipSize; x < (i % stageW * chipSize) + 32; ++x)
+						for (int x = i % m_stageWidth * m_chipSize; x < (i % m_stageWidth * m_chipSize) + 32; ++x)
 						{
-							System.Drawing.Color color = bitmap.GetPixel(x - (i % stageW * chipSize) + (32 * stageTable[i]), y - (i / stageW * chipSize));
+							System.Drawing.Color color = bitmap.GetPixel(x - (i % m_stageWidth * m_chipSize) + (32 * m_stageTable[i]), y - (i / m_stageWidth * m_chipSize));
 
 							byte* pb = ptr + (y * processedBitmap.BackBufferStride) + (x * 4);
 
@@ -161,9 +167,9 @@ namespace MapEditor
 				}
 
 				// 床の上のオブジェクトを描画する
-				if (objectTable[i] != ObjectID.None)
+				if (m_objectTable[i] != ObjectID.NONE)
 				{
-					if (objectTable[i] < ObjectID.Enemy)
+					if (m_objectTable[i] < ObjectID.ENEMY)
 					{
 						// プレイヤー＆パーツの場合
 						unsafe
@@ -173,11 +179,11 @@ namespace MapEditor
 							BitmapSource bs = (BitmapSource)playerPartsImage.Source;
 							Bitmap bitmap = ToBitmap(bs, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-							for (int y = i / stageW * chipSize; y < (i / stageW * chipSize) + 32; ++y)
+							for (int y = i / m_stageWidth * m_chipSize; y < (i / m_stageWidth * m_chipSize) + 32; ++y)
 							{
-								for (int x = i % stageW * chipSize; x < (i % stageW * chipSize) + 32; ++x)
+								for (int x = i % m_stageWidth * m_chipSize; x < (i % m_stageWidth * m_chipSize) + 32; ++x)
 								{
-									System.Drawing.Color color = bitmap.GetPixel(x - (i % stageW * chipSize) + (32 * (int)objectTable[i]), y - (i / stageW * chipSize));
+									System.Drawing.Color color = bitmap.GetPixel(x - (i % m_stageWidth * m_chipSize) + (32 * (int)m_objectTable[i]), y - (i / m_stageWidth * m_chipSize));
 
 									byte* pb = ptr + (y * processedBitmap.BackBufferStride) + (x * 4);
 
@@ -202,11 +208,11 @@ namespace MapEditor
 							BitmapSource bs = (BitmapSource)enemyImage.Source;
 							Bitmap bitmap = ToBitmap(bs, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-							for (int y = i / stageW * chipSize; y < (i / stageW * chipSize) + 32; ++y)
+							for (int y = i / m_stageWidth * m_chipSize; y < (i / m_stageWidth * m_chipSize) + 32; ++y)
 							{
-								for (int x = i % stageW * chipSize; x < (i % stageW * chipSize) + 32; ++x)
+								for (int x = i % m_stageWidth * m_chipSize; x < (i % m_stageWidth * m_chipSize) + 32; ++x)
 								{
-									System.Drawing.Color color = bitmap.GetPixel(x - (i % stageW * chipSize) + (32 * ((int)objectTable[i] - (int)ObjectID.Enemy)), y - (i / stageW * chipSize));
+									System.Drawing.Color color = bitmap.GetPixel(x - (i % m_stageWidth * m_chipSize) + (32 * ((int)m_objectTable[i] - (int)ObjectID.ENEMY)), y - (i / m_stageWidth * m_chipSize));
 
 									byte* pb = ptr + (y * processedBitmap.BackBufferStride) + (x * 4);
 									if (color.A != 0)
@@ -222,7 +228,7 @@ namespace MapEditor
 					}
 				}
 
-				processedBitmap.AddDirtyRect(new Int32Rect(i % stageW * chipSize, i / stageW * chipSize, 32, 32));
+				processedBitmap.AddDirtyRect(new Int32Rect(i % m_stageWidth * m_chipSize, i / m_stageWidth * m_chipSize, 32, 32));
 			}
 
 			processedBitmap.Unlock();
@@ -249,9 +255,9 @@ namespace MapEditor
 				selectImage.Source = cb;
 
 				// プレイヤー＆パーツのチップを選択した
-				selectID = SelectID.PlayerParts;
+				m_selectID = SelectID.PLAYER_PARTS;
 				// 選択しているチップ番号を記憶
-				selectChip = chipPos.X / chipSize;
+				m_selectChip = chipPos.X / m_chipSize;
 			}
 		}
 
@@ -272,9 +278,9 @@ namespace MapEditor
 				selectImage.Source = cb;
 
 				// 敵のチップを選択した
-				selectID = SelectID.Enemy;
+				m_selectID = SelectID.ENEMY;
 				// 選択しているチップ番号を記憶
-				selectChip = chipPos.X / chipSize + (int)ObjectID.Enemy;
+				m_selectChip = chipPos.X / m_chipSize + (int)ObjectID.ENEMY;
 			}
 		}
 
@@ -290,14 +296,14 @@ namespace MapEditor
 			if (e.LeftButton == MouseButtonState.Pressed)
 			{
 				// どこのチップかマウスの位置から算出する
-				int num = chipPos.X / chipSize + chipPos.Y / chipSize * stageW;
-				if (selectID == SelectID.Floor)
+				int num = chipPos.X / m_chipSize + chipPos.Y / m_chipSize * m_stageWidth;
+				if (m_selectID == SelectID.FLOOR)
 				{
 					// オブジェクトが置いてあれば床は変更できない
-					if (objectTable[num] == ObjectID.None)
+					if (m_objectTable[num] == ObjectID.NONE)
 					{
 						// ステージに選んだチップを置く
-						stageTable[num] = selectChip;
+						m_stageTable[num] = m_selectChip;
 					}
 				}
 				else
@@ -305,14 +311,14 @@ namespace MapEditor
 					// ステージ上のオブジェクトを配置する
 
 					// 床がない場所は置けない
-					if (stageTable[num] != 0)
+					if (m_stageTable[num] != 0)
 					{
 						// プレイヤーを置く場合は一回消しておく
-						if (selectID == SelectID.PlayerParts && selectChip == (int)ObjectID.Player)
+						if (m_selectID == SelectID.PLAYER_PARTS && m_selectChip == (int)ObjectID.PLAYER)
 						{
 							DeletePlayer();
 						}
-						objectTable[num] = (ObjectID)selectChip;
+						m_objectTable[num] = (ObjectID)m_selectChip;
 					}
 				}
 				// 画面を再描画する
@@ -323,21 +329,21 @@ namespace MapEditor
 		private void DeletePlayer()
 		{
 			// プレイヤーを全て消す
-			for (int i = 0; i < stageW * stageH; i++)
+			for (int i = 0; i < m_stageWidth * m_stageHeight; i++)
 			{
-				if (objectTable[i] == ObjectID.Player)
+				if (m_objectTable[i] == ObjectID.PLAYER)
 				{
-					objectTable[i] = ObjectID.None;
+					m_objectTable[i] = ObjectID.NONE;
 				}
 			}
 		}
 
 		private void resetButton_MouseDown(object sender, MouseButtonEventArgs e)
 		{               // 全て消す
-			for (int i = 0; i < stageW * stageH; i++)
+			for (int i = 0; i < m_stageWidth * m_stageHeight; i++)
 			{
-				stageTable[i] = 0;
-				objectTable[i] = ObjectID.None;
+				m_stageTable[i] = 0;
+				m_objectTable[i] = ObjectID.NONE;
 			}
 			// 画面を再描画する
 			UpdateStage();
@@ -362,12 +368,12 @@ namespace MapEditor
 					writer.WriteLine("STAGE");
 
 					// ステージデータをセーブする
-					for (int j = 0; j < stageH; j++)
+					for (int j = 0; j < m_stageHeight; j++)
 					{
 						string str = "";
-						for (int i = 0; i < stageW; i++)
+						for (int i = 0; i < m_stageWidth; i++)
 						{
-							str += stageTable[j * stageW + i].ToString() + ",";
+							str += m_stageTable[j * m_stageWidth + i].ToString() + ",";
 						}
 						writer.WriteLine(str);
 					}
@@ -376,12 +382,12 @@ namespace MapEditor
 					writer.WriteLine("OBJECT");
 
 					// 床の上のオブジェクトデータをセーブする
-					for (int j = 0; j < stageH; j++)
+					for (int j = 0; j < m_stageHeight; j++)
 					{
 						string str = "";
-						for (int i = 0; i < stageW; i++)
+						for (int i = 0; i < m_stageWidth; i++)
 						{
-							str += ((int)objectTable[j * stageW + i]).ToString() + ",";
+							str += ((int)m_objectTable[j * m_stageWidth + i]).ToString() + ",";
 						}
 						writer.WriteLine(str);
 					}
@@ -414,15 +420,15 @@ namespace MapEditor
 					}
 
 					// ステージデータを読み込む
-					for (int j = 0; j < stageH; j++)
+					for (int j = 0; j < m_stageHeight; j++)
 					{
 						// 1行読み込む
 						string str = reader.ReadLine();
 						// カンマでスプリット（分割）する
 						string[] arr = str.Split(',');
-						for (int i = 0; i < stageW; i++)
+						for (int i = 0; i < m_stageWidth; i++)
 						{
-							stageTable[j * stageW + i] = int.Parse(arr[i]);
+							m_stageTable[j * m_stageWidth + i] = int.Parse(arr[i]);
 						}
 					}
 
@@ -437,15 +443,15 @@ namespace MapEditor
 					}
 
 					// 床の上のオブジェクトデータを読み込む
-					for (int j = 0; j < stageH; j++)
+					for (int j = 0; j < m_stageHeight; j++)
 					{
 						// 1行読み込む
 						string str = reader.ReadLine();
 						// カンマでスプリット（分割）する
 						string[] arr = str.Split(',');
-						for (int i = 0; i < stageW; i++)
+						for (int i = 0; i < m_stageWidth; i++)
 						{
-							objectTable[j * stageW + i] = (ObjectID)int.Parse(arr[i]);
+							m_objectTable[j * m_stageWidth + i] = (ObjectID)int.Parse(arr[i]);
 						}
 					}
 
