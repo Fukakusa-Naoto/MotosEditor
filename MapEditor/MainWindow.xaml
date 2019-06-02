@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="479" Width="571" Loaded="Window_Loaded">
-    <Grid>
+        Title="MainWindow" Height="494.333" Width="571" Loaded="Window_Loaded">
+    <Grid Margin="0,0,3,3.333">
         <Label x:Name="label" Content="ステージ" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" FontFamily="MS UI Gothic"/>
         <Label x:Name="label1" Content="床" HorizontalAlignment="Left" Margin="417,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.061,0.59"/>
         <Label x:Name="label2" Content="プレイヤー&amp;パーツ" HorizontalAlignment="Left" Margin="427,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.311,0.538"/>

@@ -339,7 +339,8 @@ namespace MapEditor
 		}
 
 		private void resetButton_MouseDown(object sender, MouseButtonEventArgs e)
-		{               // 全て消す
+		{
+			// 全て消す
 			for (int i = 0; i < m_stageWidth * m_stageHeight; i++)
 			{
 				m_stageTable[i] = 0;
