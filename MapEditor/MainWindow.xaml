@@ -7,29 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="479" Width="571" Loaded="Window_Loaded">
     <Grid>
-        <Label x:Name="label" Content="ステージ" HorizontalAlignment="Left" Margin="39,41,0,0" VerticalAlignment="Top" FontFamily="MS UI Gothic"/>
-        <Label x:Name="label1" Content="床" HorizontalAlignment="Left" Margin="381,44,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="プレイヤー&amp;パーツ" HorizontalAlignment="Left" Margin="381,120,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label3" Content="敵" HorizontalAlignment="Left" Margin="381,188,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label4" Content="選択中" HorizontalAlignment="Left" Margin="381,278,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="saveButton" Content="セーブ" HorizontalAlignment="Left" Height="26" Margin="381,356,0,0" VerticalAlignment="Top" Width="99" MouseDown="saveButton_MouseDown"/>
-        <Button x:Name="loadButton" Content="ロード" HorizontalAlignment="Left" Height="26" Margin="381,406,0,0" VerticalAlignment="Top" Width="99" MouseDown="loadButton_MouseDown"/>
-        <Button x:Name="resetButton" Content="リセット" HorizontalAlignment="Left" Height="26" Margin="39,406,0,0" VerticalAlignment="Top" Width="99" MouseDown="resetButton_MouseDown"/>
-        <Image x:Name="stageImage" HorizontalAlignment="Left" Height="320" Margin="32,62,0,0" VerticalAlignment="Top" Width="320" MouseDown="stageImage_MouseDown"/>
-        <Image x:Name="floorImage" HorizontalAlignment="Left" Height="32" Margin="381,70,0,0" VerticalAlignment="Top" Width="64" Source="Resoureces/floor.png" MouseDown="floorImage_MouseDown">
+        <Label x:Name="label" Content="ステージ" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" FontFamily="MS UI Gothic"/>
+        <Label x:Name="label1" Content="床" HorizontalAlignment="Left" Margin="417,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.061,0.59"/>
+        <Label x:Name="label2" Content="プレイヤー&amp;パーツ" HorizontalAlignment="Left" Margin="427,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.311,0.538"/>
+        <Label x:Name="label3" Content="敵" HorizontalAlignment="Left" Margin="427,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.333,0.487"/>
+        <Label x:Name="label4" Content="選択中" HorizontalAlignment="Left" Margin="427,283,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.159,0.256"/>
+        <Button x:Name="saveButton" Content="セーブ" HorizontalAlignment="Left" Height="26" Margin="448,356,0,0" VerticalAlignment="Top" Width="99" MouseDown="saveButton_MouseDown"/>
+        <Button x:Name="loadButton" Content="ロード" HorizontalAlignment="Left" Height="26" Margin="448,403,0,0" VerticalAlignment="Top" Width="99" MouseDown="loadButton_MouseDown" RenderTransformOrigin="0.842,0.615"/>
+        <Button x:Name="resetButton" Content="リセット" HorizontalAlignment="Left" Height="26" Margin="39,421,0,0" VerticalAlignment="Top" Width="99" MouseDown="resetButton_MouseDown"/>
+        <Image x:Name="stageImage" HorizontalAlignment="Left" Height="384" Margin="10,32,0,0" VerticalAlignment="Top" Width="384" MouseDown="stageImage_MouseDown"/>
+        <Image x:Name="floorImage" HorizontalAlignment="Left" Height="32" Margin="427,75,0,0" VerticalAlignment="Top" Width="64" Source="Resoureces/floor.png" MouseDown="floorImage_MouseDown">
             <Image.OpacityMask>
                 <ImageBrush ImageSource="Resoureces\floor.png"/>
             </Image.OpacityMask>
         </Image>
-        <Image x:Name="playerPartsImage" HorizontalAlignment="Left" Height="32" Margin="381,151,0,0" VerticalAlignment="Top" Width="128" Source="Resoureces/playerParts.png" MouseDown="playerPartsImage_MouseDown">
+        <Image x:Name="playerPartsImage" HorizontalAlignment="Left" Height="32" Margin="427,151,0,0" VerticalAlignment="Top" Width="128" Source="Resoureces/playerParts.png" MouseDown="playerPartsImage_MouseDown">
             <Image.OpacityMask>
                 <ImageBrush ImageSource="Resoureces/playerParts.png"/>
             </Image.OpacityMask>
         </Image>
-        <Image x:Name="enemyImage" HorizontalAlignment="Left" Height="32" Margin="381,219,0,0" VerticalAlignment="Top" Width="64" Source="Resoureces/enemy.png" MouseDown="enemyImage_MouseDown"/>
-        <Image x:Name="selectImage" HorizontalAlignment="Left" Height="32" Margin="381,309,0,0" VerticalAlignment="Top" Width="32"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="320" Margin="32,62,0,0" VerticalAlignment="Top" Width="320"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="32" Margin="381,309,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="1.943,-0.531"/>
+        <Image x:Name="enemyImage" HorizontalAlignment="Left" Height="32" Margin="427,215,0,0" VerticalAlignment="Top" Width="64" Source="Resoureces/enemy.png" MouseDown="enemyImage_MouseDown"/>
+        <Image x:Name="selectImage" HorizontalAlignment="Left" Height="32" Margin="427,309,0,0" VerticalAlignment="Top" Width="32"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="384" Margin="10,32,0,0" VerticalAlignment="Top" Width="384"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="32" Margin="427,309,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="1.943,-0.531"/>
 
     </Grid>
 </Window>

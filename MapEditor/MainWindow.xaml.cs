@@ -46,8 +46,8 @@ namespace MapEditor
 
 		// <メンバ変数>
 		int m_chipSize = 32;  // チップのサイズ
-		int m_stageWidth = 10;    // ステージの横のチップ数
-		int m_stageHeight = 10;    // ステージの縦のチップ数
+		int m_stageWidth = 12;    // ステージの横のチップ数
+		int m_stageHeight = 12;    // ステージの縦のチップ数
 		int[] m_stageTable;   // ステージデータの配列
 		ObjectID[] m_objectTable; // 配置オブジェクトデータの配列
 		int m_selectChip = 0; // 選択されているチップ番号
